@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Jinyi Luan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
 <style>
   html, body{ height:100%; overflow:hidden; }
   body{ display:flex; flex-direction:column; }
@@ -89,20 +89,6 @@
     box-shadow:0 0 4px #fff, 0 0 12px #fff, 0 0 28px rgba(255,255,255,0.7);
   }
 
-  .index-card:active .index-title{ animation:glow-flash .4s ease-out; }
-  .index-card:active .index-num{
-    text-shadow:0 0 5px #fff, 0 0 17px #fff, 0 0 40px rgba(255,255,255,0.9);
-  }
-  .index-card:active .index-rule{
-    box-shadow:0 0 6px #fff, 0 0 18px #fff, 0 0 40px rgba(255,255,255,0.9);
-  }
-  @keyframes glow-flash{
-    0%{ text-shadow:0 0 8px #fff, 0 0 30px #fff, 0 0 65px rgba(255,255,255,1), 0 0 120px rgba(255,255,255,0.75); }
-    100%{ text-shadow:0 0 4px #fff, 0 0 14px rgba(255,255,255,0.95), 0 0 35px rgba(255,255,255,0.75), 0 0 70px rgba(255,255,255,0.45); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .index-card:active .index-title{ animation:none; }
-  }
 
   .hero-bottom{
     position:relative; z-index:3;
@@ -119,13 +105,14 @@
     .hero-index{ gap:1.5rem 2rem; }
   }
 </style>
+
 </head>
 <body>
 <header class="nav">
   <a class="wordmark-sm" href="./">Jinyi Luan</a>
   <nav class="nav-links">
-    <a class="pill" href="#">About</a>
-    <a class="pill" href="#">Contact</a>
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
   </nav>
 </header>
 
@@ -154,6 +141,5 @@
     <span class="tag-line">London, UK</span>
   </div>
 </section>
-
 </body>
 </html>
