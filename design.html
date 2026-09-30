@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design Works — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  html, body{ height:100%; overflow:hidden; }
+  body{ display:flex; flex-direction:column; background:var(--paper); }
+  .nav{ flex-shrink:0; }
+
+  .works-stage{
+    position:relative;
+    flex:1 1 auto; min-height:0;
+    overflow:hidden;
+    background:var(--paper);
+    --toc-color: var(--ink);
+    --toc-faint: var(--ink-faint);
+    --toc-line: var(--line-on-paper);
+  }
+  .corner-visual{
+    position:absolute; z-index:0;
+    right:clamp(1rem,4vw,3.5rem); bottom:0;
+    height:min(78vh, 46rem);
+    width:auto;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .5s ease;
+  }
+  .corner-2{ height:min(52vh, 30rem); right:clamp(10rem,16vw,18rem); bottom:3.5rem; }
+  .works-stage:has(.toc-item-1:hover) .corner-1, .works-stage:has(.toc-item-1:focus) .corner-1{ opacity:1; }
+  .works-stage:has(.toc-item-2:hover) .corner-2, .works-stage:has(.toc-item-2:focus) .corner-2{ opacity:1; }
+  .works-stage:has(.toc-item-3:hover) .corner-3, .works-stage:has(.toc-item-3:focus) .corner-3{ opacity:1; }
+  .corner-3{ height:min(38vh, 22rem); right:clamp(10rem,16vw,18rem); bottom:7rem; }
+  .corner-4{ height:min(30vh, 18rem); right:clamp(5rem,10vw,11rem); bottom:6rem; }
+  .works-stage:has(.toc-item-4:hover) .corner-4, .works-stage:has(.toc-item-4:focus) .corner-4{ opacity:1; }
+  .corner-5{ height:min(46vh, 26rem); right:clamp(6rem,12vw,13rem); bottom:4rem; }
+  .works-stage:has(.toc-item-5:hover) .corner-5, .works-stage:has(.toc-item-5:focus) .corner-5{ opacity:1; }
+
+  .toc-panel{
+    position:absolute; z-index:2;
+    top:clamp(1.25rem,3vw,2rem); left:clamp(1.25rem,3vw,2rem);
+    width:min(92vw, 42rem);
+    padding:clamp(1.25rem,3vw,1.75rem);
+  }
+
+  .toc-items{
+    display:flex; flex-direction:column;
+    border-top:1px solid var(--toc-line);
+  }
+  .toc-item{
+    display:flex; align-items:baseline; gap:0.6rem;
+    padding:0.6rem 0;
+    border-bottom:1px solid var(--toc-line);
+    text-decoration:none; color:inherit;
+  }
+  .toc-item:hover .toc-title, .toc-item:focus-visible .toc-title{ text-decoration:underline; }
+  .toc-sub{ font-family:var(--sans); font-size:0.78rem; color:var(--toc-color); }
+  .toc-title{
+    font-family:var(--sans); font-weight:400;
+    font-size:0.78rem; letter-spacing:0.02em; text-transform:uppercase;
+    color:var(--toc-color);
+    display:flex; flex-wrap:wrap; gap:0 0.4rem; align-items:baseline;
+  }
+  .toc-title small{
+    font-family:var(--sans); font-weight:400;
+    font-size:0.7rem; text-transform:none;
+    color:var(--toc-faint);
+  }
+  @media (max-width:640px){
+    .toc-panel{ right:clamp(1rem,3vw,1.5rem); width:auto; }
+  }
+
+  .designer-statement{
+    position:absolute; z-index:1;
+    right:clamp(1.5rem,5vw,4rem);
+    bottom:clamp(2rem,6vw,4rem);
+    max-width:26rem;
+    opacity:1;
+    cursor:zoom-in;
+    transition:opacity .4s ease;
+  }
+  .designer-statement .ds-title{
+    display:block;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:0.9rem;
+  }
+  .designer-statement p{
+    font-family:var(--sans); font-size:0.95rem; line-height:1.7;
+    color:var(--ink-faint);
+  }
+  .works-stage:has(.toc-item:hover) .designer-statement,
+  .works-stage:has(.toc-item:focus) .designer-statement{
+    opacity:0;
+  }
+  @media (max-width:900px){
+    .designer-statement{ display:none; }
+  }
+
+  .statement-backdrop{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(23,20,15,0);
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+    padding:3rem 1.5rem; overflow:auto;
+    transition:opacity .25s ease, background .25s ease;
+  }
+  body.statement-expanded .statement-backdrop{
+    background:rgba(23,20,15,0.92);
+    opacity:1; pointer-events:auto;
+  }
+  body.statement-expanded .designer-statement{
+    position:fixed; z-index:201;
+    top:50%; left:50%; right:auto; bottom:auto;
+    transform:translate(-50%,-50%);
+    max-width:min(90vw, 42rem);
+    opacity:1;
+    cursor:zoom-out;
+  }
+  body.statement-expanded .designer-statement .ds-title{ color:#f3ede1; }
+  body.statement-expanded .designer-statement p{
+    color:#f3ede1; font-size:1.2rem; line-height:1.75;
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="works-stage">
+  <img class="corner-visual corner-1" src="assets/1a06c43ba27c0de21539241f93effae1.png" alt="" aria-hidden="true">
+  <img class="corner-visual corner-2" src="assets/80bf54e2a8f79bc1098532546004f9da.png" alt="" aria-hidden="true">
+  <img class="corner-visual corner-3" src="assets/5336cc4d7ab2c722b6f7a425a2bdc1cb.png" alt="" aria-hidden="true">
+  <img class="corner-visual corner-4" src="assets/17ceef947a876da32c7b43611b3c097d.png" alt="" aria-hidden="true">
+  <img class="corner-visual corner-5" src="assets/98d6bdee7784c48c5cdd657aeb3316f0.png" alt="" aria-hidden="true">
+
+  <div class="statement-backdrop" id="statementBackdrop"></div>
+  <div class="designer-statement" id="designerStatement">
+    <span class="ds-title">As a designer</span>
+    <p>Working as a designer has taught me to observe before creating. I have learned to understand who I am designing for, how people's needs shift across different contexts and stages, and how to translate these observations into practical design decisions. For me, design is about applying visual thinking and aesthetic methodologies to real-world needs, finding a balance between function, experience, and expression.</p>
+  </div>
+
+  <div class="toc-panel">
+    <div class="toc-items">
+      <a class="toc-item toc-item-1" href="design-project-1.html">
+        <span class="toc-sub">01 /</span>
+        <span class="toc-title">Lighthouse<small>Product design, UI/UX · 2024</small></span>
+      </a>
+      <a class="toc-item toc-item-2" href="design-project-2.html">
+        <span class="toc-sub">02 /</span>
+        <span class="toc-title">Life Assistant<small>Product design, UI/UX · 2023</small></span>
+      </a>
+      <a class="toc-item toc-item-3" href="design-project-3.html">
+        <span class="toc-sub">03 /</span>
+        <span class="toc-title">Rainbow Arch<small>Packaging design · 2022</small></span>
+      </a>
+      <a class="toc-item toc-item-4" href="design-project-4.html">
+        <span class="toc-sub">04 /</span>
+        <span class="toc-title">Ripple<small>Product design · 2022</small></span>
+      </a>
+      <a class="toc-item toc-item-5" href="design-project-5.html">
+        <span class="toc-sub">05 /</span>
+        <span class="toc-title">Camping Panda<small>Product design, illustration · 2021</small></span>
+      </a>
+      <a class="toc-item toc-item-6" href="design-project-6.html">
+        <span class="toc-sub">06 /</span>
+        <span class="toc-title">Others<small>Brand design · 2020–2023</small></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var stmt = document.getElementById('designerStatement');
+  var backdrop = document.getElementById('statementBackdrop');
+  function isOpen(){ return document.body.classList.contains('statement-expanded'); }
+  function open(){ document.body.classList.add('statement-expanded'); }
+  function close(){ document.body.classList.remove('statement-expanded'); }
+  stmt.addEventListener('click', function(){ isOpen() ? close() : open(); });
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isOpen()) close(); });
+})();
+</script>
+</body>
+</html>

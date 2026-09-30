@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  html, body{ min-height:100%; }
+  body{ background:var(--paper); color:var(--ink); }
+
+  .about-main{
+    min-height:calc(100vh - var(--nav-h));
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(2rem,6vw,5rem) clamp(1.25rem,4vw,3rem);
+  }
+  .about-content{
+    max-width:42rem;
+    text-align:center;
+  }
+  .about-eyebrow{
+    display:block;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:1.5rem;
+  }
+  .about-content p{
+    font-family:var(--display); font-weight:500;
+    font-size:clamp(1.15rem,2.3vw,1.5rem); line-height:1.6;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .about-content p + p{ margin-top:1.5rem; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill is-active" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="about-main">
+  <div class="about-content">
+    <span class="about-eyebrow">About</span>
+    <p>I am an interdisciplinary artist and designer working across computational art, visual design, and interactive experiences.</p>
+    <p>My practice is driven by an interest in how we perceive and experience existence within an increasingly data-driven world. I observe shifting relationships between humans, technology, other species, and their surrounding environments, with particular attention to embodied experience, memory, emotion, anxiety, and the everyday.</p>
+    <p>Rather than treating data and AI simply as technologies, I use them as creative methods to make experiences that are often invisible, intangible, or difficult to articulate perceptible again.</p>
+  </div>
+</main>
+</body>
+</html>

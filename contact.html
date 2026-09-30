@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  html, body{ min-height:100%; }
+  body{ background:var(--paper); color:var(--ink); }
+
+  .contact-main{
+    min-height:calc(100vh - var(--nav-h));
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(2rem,6vw,5rem) clamp(1.25rem,4vw,3rem);
+  }
+  .contact-content{
+    max-width:32rem;
+    text-align:center;
+  }
+  .contact-eyebrow{
+    display:block;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:1.5rem;
+  }
+  .contact-content p{
+    font-family:var(--display); font-weight:500;
+    font-size:clamp(1.1rem,2.2vw,1.4rem); line-height:1.6;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .contact-links{
+    margin-top:2.5rem;
+    display:flex; flex-direction:column; align-items:center; gap:0.75rem;
+  }
+  .contact-links a{
+    font-family:var(--mono); font-size:0.82rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink);
+    border:1px solid var(--line-on-paper);
+    border-radius:999px;
+    padding:0.6rem 1.5rem;
+    min-width:12rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill is-active" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="contact-main">
+  <div class="contact-content">
+    <span class="contact-eyebrow">Contact</span>
+    <p>Get in touch, or follow along with new work.</p>
+    <div class="contact-links">
+      <a href="https://instagram.com/166.0320" target="_blank" rel="noopener">@166.0320</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Camping Panda — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  body{ background:var(--paper); color:var(--ink); }
+
+  .project{
+    --gutter: clamp(1.25rem,3vw,2.5rem);
+    margin:0;
+    padding:clamp(1.25rem,3vw,2rem) var(--gutter) clamp(3rem,6vw,5rem);
+  }
+
+  .project-eyebrow{
+    display:block; text-align:center;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink);
+  }
+  .project-title{
+    font-family:var(--cjk-serif); font-weight:700;
+    font-size:clamp(1.6rem,3.8vw,2.6rem);
+    margin:0.6rem 0 1.25rem; text-wrap:balance;
+    text-align:center;
+    color:var(--ink);
+  }
+  .project-meta{
+    display:flex; gap:2rem clamp(1.5rem,4vw,3rem); flex-wrap:wrap;
+    justify-content:center;
+    border-top:1px solid var(--line-on-paper);
+    border-bottom:1px solid var(--line-on-paper);
+    padding:1.1rem 0;
+  }
+  .project-meta .label{
+    display:block;
+    font-family:var(--mono); font-size:0.66rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:0.3rem;
+  }
+  .project-meta .value{
+    font-family:var(--sans); font-size:0.9rem; color:var(--ink);
+  }
+
+  .project-body{
+    max-width:60ch; margin:clamp(2rem,5vw,3rem) auto 0;
+    font-family:var(--sans); font-size:1.02rem; line-height:1.75;
+    color:var(--ink);
+    text-align:center;
+  }
+  .project-body p + p{ margin-top:1.2rem; }
+
+  .project-gallery{
+    display:flex; flex-wrap:nowrap; align-items:flex-start;
+    gap:clamp(1rem,3vw,2rem);
+    margin:2.75rem 0 0.5rem;
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x proximity;
+    padding:0 clamp(1.25rem,3vw,2.5rem) 0.75rem;
+    margin-left:calc(-1 * clamp(1.25rem,3vw,2.5rem));
+    margin-right:calc(-1 * clamp(1.25rem,3vw,2.5rem));
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .project-gallery img{
+    display:block;
+    width:clamp(24rem, 42vw, 38rem); height:clamp(24rem, 42vw, 38rem);
+    object-fit:contain; object-position:center;
+    background:var(--paper);
+    max-width:none; flex:0 0 auto;
+    scroll-snap-align:start;
+    cursor:zoom-in;
+  }
+  .image-caption{
+    display:block; text-align:center;
+    margin-bottom:2.75rem;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+  @media (max-width:720px){
+    .project-gallery img{ width:78vw; height:78vw; }
+  }
+
+  .lightbox-backdrop{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(10,9,8,0);
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+    overflow:auto; padding:2rem;
+    transition:opacity .25s ease, background .25s ease;
+  }
+  body.lightbox-open .lightbox-backdrop{
+    background:rgba(10,9,8,0.92);
+    opacity:1; pointer-events:auto;
+  }
+  .lightbox-backdrop img{
+    display:block;
+    width:auto; height:auto;
+    max-width:92vw; max-height:92vh;
+    cursor:zoom-out;
+  }
+  .lightbox-close{
+    position:fixed; z-index:202; top:1.5rem; right:1.5rem;
+    width:2.4rem; height:2.4rem;
+    border:none; border-radius:999px;
+    background:rgba(255,255,255,0.15);
+    color:#fff; font-size:1.1rem; line-height:1;
+    display:none; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  body.lightbox-open .lightbox-close{ display:flex; }
+  .lightbox-close:hover{ background:rgba(255,255,255,0.28); }
+
+  .page-footer{
+    margin:0;
+    padding:0 clamp(1.25rem,3vw,2.5rem) clamp(2.5rem,5vw,4rem);
+    display:flex; justify-content:space-between; align-items:center;
+    gap:1rem; flex-wrap:wrap;
+  }
+  .next-project{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:var(--mono); font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink); text-decoration:none;
+    border:1px solid var(--line-on-paper);
+    border-radius:999px;
+    padding:0.6rem 1.3rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .next-project:hover{ background:var(--ink); color:var(--paper); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="project">
+  <span class="project-eyebrow">05 / 06</span>
+  <h1 class="project-title">Camping Panda</h1>
+
+  <div class="project-meta">
+    <div><span class="label">Medium</span><span class="value">Product design, illustration</span></div>
+    <div><span class="label">Year</span><span class="value">2021</span></div>
+    <div><span class="label">Type</span><span class="value">Panda camping-themed merchandise and product development</span></div>
+  </div>
+
+  <div class="project-body">
+    <p>This collection of creative products draws inspiration from Chengdu's culture, incorporating local icons such as pandas and traditional snacks to capture the essence of the city's leisurely lifestyle. The central character is a panda living in a bamboo grove, far from the city. Featured across a range of camping-themed products, it conveys the idea of camping as a way to unwind and relieve stress.</p>
+  </div>
+
+  <div class="project-gallery">
+    <img src="assets/61538ba371c60cc2c511bc0fe12ad2f3.jpg" alt="Camping Panda illustration, panda characters camping with a tent, campfire and picnic">
+    <img src="assets/a325cc9ea36db5c0d802f4ad80400cf8.jpg" alt="Camping Panda merchandise collection, including tote bags, stickers, badges and other camping-themed items">
+    <img src="assets/c5a3b82731864bc4a1f4633d9cf71dc9.jpg" alt="Camping Panda illustration and character sheet">
+    <img src="assets/6dfc06e0dce36af7fea1e7d6fdb940b4.jpg" alt="Camping Panda product development, including a mahjong set, camping storage box, collapsible cup and mahjong mat">
+  </div>
+  <span class="image-caption">Merchandise collection, illustration and character sheet, product development · Placeholder caption</span>
+</main>
+
+<div class="lightbox-backdrop" id="lightboxBackdrop" aria-hidden="true">
+  <img id="lightboxImg" src="" alt="">
+</div>
+<button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close">✕</button>
+
+<footer class="page-footer">
+  <a class="next-project" href="design.html">← Back to Design Works</a>
+</footer>
+
+<script>
+(function(){
+  var backdrop = document.getElementById('lightboxBackdrop');
+  var closeBtn = document.getElementById('lightboxClose');
+  var lbImg = document.getElementById('lightboxImg');
+  var thumbs = document.querySelectorAll('.project-gallery img');
+  function isOpen(){ return document.body.classList.contains('lightbox-open'); }
+  function open(src, alt){ lbImg.src = src; lbImg.alt = alt || ''; document.body.classList.add('lightbox-open'); }
+  function close(){ document.body.classList.remove('lightbox-open'); }
+  thumbs.forEach(function(t){
+    t.addEventListener('click', function(){ open(t.src, t.alt); });
+  });
+  lbImg.addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', function(e){ if (e.target === backdrop) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isOpen()) close(); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rainbow Arch — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  body{ background:var(--paper); color:var(--ink); }
+
+  .project{
+    --gutter: clamp(1.25rem,3vw,2.5rem);
+    margin:0;
+    padding:clamp(1.25rem,3vw,2rem) var(--gutter) clamp(3rem,6vw,5rem);
+  }
+
+  .project-eyebrow{
+    display:block; text-align:center;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink);
+  }
+  .project-title{
+    font-family:var(--cjk-serif); font-weight:700;
+    font-size:clamp(1.6rem,3.8vw,2.6rem);
+    margin:0.6rem 0 1.25rem; text-wrap:balance;
+    text-align:center;
+    color:var(--ink);
+  }
+  .project-meta{
+    display:flex; gap:2rem clamp(1.5rem,4vw,3rem); flex-wrap:wrap;
+    justify-content:center;
+    border-top:1px solid var(--line-on-paper);
+    border-bottom:1px solid var(--line-on-paper);
+    padding:1.1rem 0;
+  }
+  .project-meta .label{
+    display:block;
+    font-family:var(--mono); font-size:0.66rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:0.3rem;
+  }
+  .project-meta .value{
+    font-family:var(--sans); font-size:0.9rem; color:var(--ink);
+  }
+
+  .project-body{
+    max-width:60ch; margin:clamp(2rem,5vw,3rem) auto 0;
+    font-family:var(--sans); font-size:1.02rem; line-height:1.75;
+    color:var(--ink);
+    text-align:center;
+  }
+  .project-body p + p{ margin-top:1.2rem; }
+
+  .project-gallery{
+    display:flex; flex-wrap:nowrap; align-items:flex-start;
+    gap:clamp(1rem,3vw,2rem);
+    margin:2.75rem 0 0.5rem;
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x proximity;
+    padding:0 clamp(1.25rem,3vw,2.5rem) 0.75rem;
+    margin-left:calc(-1 * clamp(1.25rem,3vw,2.5rem));
+    margin-right:calc(-1 * clamp(1.25rem,3vw,2.5rem));
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .project-gallery img{
+    display:block;
+    width:clamp(20rem, 34vw, 28rem); height:clamp(20rem, 34vw, 28rem);
+    object-fit:contain; object-position:center;
+    background:var(--paper);
+    max-width:none; flex:0 0 auto;
+    scroll-snap-align:start;
+    cursor:zoom-in;
+  }
+
+  .lightbox-backdrop{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(10,9,8,0);
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+    overflow:auto; padding:2rem;
+    transition:opacity .25s ease, background .25s ease;
+  }
+  body.lightbox-open .lightbox-backdrop{
+    background:rgba(10,9,8,0.92);
+    opacity:1; pointer-events:auto;
+  }
+  .lightbox-backdrop img{
+    display:block;
+    width:auto; height:auto;
+    max-width:92vw; max-height:92vh;
+    cursor:zoom-out;
+  }
+  .lightbox-close{
+    position:fixed; z-index:202; top:1.5rem; right:1.5rem;
+    width:2.4rem; height:2.4rem;
+    border:none; border-radius:999px;
+    background:rgba(255,255,255,0.15);
+    color:#fff; font-size:1.1rem; line-height:1;
+    display:none; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  body.lightbox-open .lightbox-close{ display:flex; }
+  .lightbox-close:hover{ background:rgba(255,255,255,0.28); }
+  .img-process{
+    width:clamp(30rem, 52vw, 44rem); height:clamp(30rem, 52vw, 44rem);
+  }
+  .image-caption{
+    display:block; text-align:center;
+    margin-bottom:2.75rem;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+  @media (max-width:720px){
+    .project-gallery img{ width:78vw; height:78vw; }
+  }
+
+  .page-footer{
+    margin:0;
+    padding:0 clamp(1.25rem,3vw,2.5rem) clamp(2.5rem,5vw,4rem);
+    display:flex; justify-content:space-between; align-items:center;
+    gap:1rem; flex-wrap:wrap;
+  }
+  .next-project{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:var(--mono); font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink); text-decoration:none;
+    border:1px solid var(--line-on-paper);
+    border-radius:999px;
+    padding:0.6rem 1.3rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .next-project:hover{ background:var(--ink); color:var(--paper); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="project">
+  <span class="project-eyebrow">03 / 06</span>
+  <h1 class="project-title">Rainbow Arch</h1>
+
+  <div class="project-meta">
+    <div><span class="label">Medium</span><span class="value">Packaging design</span></div>
+    <div><span class="label">Year</span><span class="value">2022</span></div>
+    <div><span class="label">Type</span><span class="value">Children's snack gift box concept</span></div>
+  </div>
+
+  <div class="project-body">
+    <p>A children's snack gift box built around a rainbow arch as its core motif — opening the outer box reveals a stand-up theatre-stage scene, complete with character cards and individually wrapped snacks inside. Placeholder content, to be replaced once real copy is ready.</p>
+  </div>
+
+  <div class="project-gallery">
+    <img src="assets/26e84de603994016fadc38ccf1c5a5d5.jpg" alt="Rainbow Arch theatre-stage interior detail and rainbow-arch outer box render">
+    <img src="assets/f749ff73e6e0a8b39bdb32d28d838d3c.jpg" alt="Rainbow Arch theatre stage, empty scene compared with the illustrated character scene">
+    <img class="img-process" src="assets/dfcdc91e72c9e8ea29027f4f265aa11d.png" alt="Rainbow Arch packaging unfold sequence, from outer box to theatre-stage scene to cards and individual packs">
+    <img src="assets/626f1c53a0265da577a7f9a39b25b1cd.png" alt="Rainbow Arch character illustrations, animal cast group scene in the forest">
+    <img src="assets/1a014bf7bd1b8448decf158a5dd9580c.png" alt="Rainbow Arch COOKIE series full product line-up, each flavor's packaging and character cards">
+    <img src="assets/996e0530fc9c924423acde95d8030872.png" alt="Rainbow Arch blueberry-flavor unboxing sequence, from outer box to sticker detail">
+  </div>
+  <span class="image-caption">Unfold sequence, character illustrations, product line-up, unboxing detail · Placeholder caption</span>
+</main>
+
+<div class="lightbox-backdrop" id="lightboxBackdrop" aria-hidden="true">
+  <img id="lightboxImg" src="" alt="">
+</div>
+<button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close">✕</button>
+
+<footer class="page-footer">
+  <a class="next-project" href="design.html">← Back to Design Works</a>
+</footer>
+
+<script>
+(function(){
+  var backdrop = document.getElementById('lightboxBackdrop');
+  var closeBtn = document.getElementById('lightboxClose');
+  var lbImg = document.getElementById('lightboxImg');
+  var thumbs = document.querySelectorAll('.project-gallery img');
+  function isOpen(){ return document.body.classList.contains('lightbox-open'); }
+  function open(src, alt){ lbImg.src = src; lbImg.alt = alt || ''; document.body.classList.add('lightbox-open'); }
+  function close(){ document.body.classList.remove('lightbox-open'); }
+  thumbs.forEach(function(t){
+    t.addEventListener('click', function(){ open(t.src, t.alt); });
+  });
+  lbImg.addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', function(e){ if (e.target === backdrop) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isOpen()) close(); });
+})();
+</script>
+</body>
+</html>

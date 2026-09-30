@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>the tree looks back — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&text=%E6%97%A0%E9%A2%98%E9%A1%B9%E7%9B%AE%E4%B8%80&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  body{ background:var(--black); color:var(--ink-on-black); }
+
+  .nav{ background:var(--black); border-bottom:1px solid var(--line-on-black); }
+  .wordmark-sm{ color:#fff; }
+  .nav-links .pill{ color:#fff; }
+  .nav-links .pill:hover, .nav-links .pill.is-active{ color:#fff; }
+
+  .project{
+    --gutter: clamp(1.25rem,3vw,2.5rem);
+    margin:0;
+    padding:clamp(1.25rem,3vw,2rem) var(--gutter) clamp(3rem,6vw,5rem);
+  }
+  .back-link{
+    display:inline-flex; align-items:center; gap:0.4rem;
+    font-family:var(--mono); font-size:0.75rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:2.5rem;
+  }
+  .back-link:hover{ color:var(--ink-on-black); }
+
+  .project-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:start;
+    gap:clamp(1.5rem,4vw,3rem);
+    margin-top:clamp(2rem,5vw,3rem);
+  }
+  .project-left{ display:flex; flex-direction:column; }
+
+  .project-eyebrow{
+    display:block; text-align:center;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:#fff;
+  }
+  .project-title{
+    font-family:var(--cjk-serif); font-weight:700;
+    font-size:clamp(1.5rem,3.6vw,2.4rem);
+    margin:0.6rem 0 1.25rem; text-wrap:balance;
+    text-align:center;
+    color:#fff;
+  }
+  .project-meta{
+    display:grid;
+    grid-template-columns:minmax(8rem,1fr) minmax(5rem,0.7fr) minmax(14rem,2.4fr);
+    gap:1.5rem;
+    border-top:1px solid var(--line-on-black);
+    border-bottom:1px solid var(--line-on-black);
+    padding:1.1rem 0;
+    padding-left:clamp(2rem,8vw,6rem);
+  }
+  @media (max-width:640px){
+    .project-meta{ grid-template-columns:1fr; gap:1rem; }
+  }
+  .project-meta .label{
+    display:block;
+    font-family:var(--mono); font-size:0.66rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:#fff; margin-bottom:0.3rem;
+  }
+  .project-meta .value{
+    font-family:var(--sans); font-size:0.9rem; color:#fff;
+  }
+
+  .project-gallery{
+    display:flex; flex-wrap:wrap; align-items:flex-start;
+    gap:clamp(1rem,3vw,2rem);
+    margin:2.75rem 0 0.5rem;
+    margin-left:clamp(1rem,4vw,3rem);
+  }
+  .project-gallery img{
+    display:block; width:auto; height:min(70vh, 42rem);
+    max-width:100%;
+  }
+  .img-resin{
+    margin-left:clamp(0.3rem,1vw,0.8rem);
+  }
+  .image-caption{
+    display:block; margin-bottom:2.75rem;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+
+  .project-body{
+    max-width:60ch;
+    font-family:var(--sans); font-size:1.02rem; line-height:1.75;
+    color:var(--ink-on-black);
+  }
+  .project-body p + p{ margin-top:1.2rem; }
+
+  .intro-col{ margin-top:clamp(2rem,4vw,2.75rem); }
+  .intro-col .col-label{
+    display:block;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:0.75rem;
+  }
+  .intro-col p{
+    font-family:var(--cjk-serif); font-weight:600;
+    font-size:clamp(1.1rem,2.2vw,1.5rem); line-height:1.5;
+    color:var(--ink-on-black); text-wrap:balance;
+  }
+  .video-frame{
+    position:relative; align-self:start;
+    width:clamp(19rem, 35vw, 28rem);
+    aspect-ratio:9/16;
+    max-width:100%;
+    margin-left:clamp(1rem, 4vw, 3rem);
+  }
+  .project-video{
+    display:block;
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    background:#111;
+  }
+  .expand-btn{
+    position:absolute; top:1rem; right:1rem;
+    z-index:2;
+    width:2.4rem; height:2.4rem;
+    border:none; border-radius:999px;
+    background:rgba(16,14,12,0.55);
+    color:#fff; font-size:1.1rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .expand-btn:hover{ background:rgba(16,14,12,0.8); }
+
+  .lightbox-backdrop{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(10,9,8,0);
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .25s ease, background .25s ease;
+  }
+  body.video-expanded .lightbox-backdrop{
+    background:rgba(10,9,8,0.92);
+    opacity:1; pointer-events:auto;
+  }
+  body.video-expanded .project-video{
+    position:fixed; z-index:201;
+    top:50%; left:50%; transform:translate(-50%,-50%);
+    width:auto; height:90vh; max-width:92vw;
+    margin:0;
+  }
+  body.video-expanded .expand-btn{
+    position:fixed; z-index:202; top:1.5rem; right:1.5rem;
+  }
+  @media (max-width:720px){
+    .project-layout{ grid-template-columns:1fr; }
+    .video-frame{ width:100%; max-width:18rem; margin:clamp(2rem,5vw,3rem) auto 0; }
+    .project-gallery{ flex-direction:column; }
+    .project-gallery img{ width:100%; height:auto; }
+    .img-resin{ margin-left:0; }
+  }
+
+  .page-footer{
+    margin:0;
+    padding:0 clamp(1.25rem,3vw,2.5rem) clamp(2.5rem,5vw,4rem);
+    display:flex; justify-content:flex-end;
+  }
+  .next-project{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:var(--mono); font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:#fff; text-decoration:none;
+    border:1px solid var(--line-on-black);
+    border-radius:999px;
+    padding:0.6rem 1.3rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .next-project:hover{ background:#fff; color:var(--black); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="project">
+  <span class="project-eyebrow">01 / 10</span>
+  <h1 class="project-title">the tree looks back</h1>
+
+  <div class="project-meta">
+    <div><span class="label">Medium</span><span class="value">Interactive installation</span></div>
+    <div><span class="label">Year</span><span class="value">2025</span></div>
+    <div><span class="label">Technology</span><span class="value">TouchDesigner, motor servo, distance sensor, clay, 3D printing, webcam</span></div>
+  </div>
+
+  <div class="project-layout">
+    <div class="video-frame">
+      <video class="project-video" id="projectVideo" src="assets/d8e178428f9051974438f959d291aa51.mp4" controls playsinline preload="metadata"></video>
+      <button class="expand-btn" id="expandVideoBtn" type="button" aria-label="Expand video">⤢</button>
+    </div>
+
+    <div class="project-left">
+      <div class="project-body">
+        <p>This is an interactive installation: an anthropomorphised tree bearing deep time and possessing its own thoughts, situated within a space of blurred boundaries. It serves as a metaphor for our performative pseudo-era — where distinctions between boundaries and intimacy lose their clear definition.</p>
+        <p>The tree observes, records, and reacts to human presence, thereby critiquing surveillance and performativity while exploring the relationship between watching and being watched.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox-backdrop" id="lightboxBackdrop" aria-hidden="true"></div>
+
+  <div class="project-gallery">
+    <img src="assets/284b0596ec484f3ebc169a6a19418e90.jpg" alt="the tree looks back, bark and mechanical component installation, exhibition view">
+    <img src="assets/47a9065ce59549e02afe8fb2b3d3d779.jpg" alt="the tree looks back, bark texture and internal wiring detail">
+    <img src="assets/91c47ef72cf6f47509655526765f93dc.jpg" alt="the tree looks back, full installation view with table, chairs and fallen-leaf pile">
+    <img class="img-resin" src="assets/40a2b3693520f354a3af6f35ca04e07c.jpg" alt="the tree looks back, transparent resin material detail">
+    <img src="assets/64ca3575c830431c583a6fb8dd71935e.png" alt="the tree looks back, mechanical arm tip reaching from the edge of the plinth">
+  </div>
+  <span class="image-caption">Exhibition views, material detail shots · Placeholder caption</span>
+</main>
+
+<footer class="page-footer">
+  <a class="next-project" href="project-2.html">Next Project →</a>
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('expandVideoBtn');
+  var backdrop = document.getElementById('lightboxBackdrop');
+  function isOpen(){ return document.body.classList.contains('video-expanded'); }
+  function open(){ document.body.classList.add('video-expanded'); btn.textContent = '✕'; btn.setAttribute('aria-label','Close expanded view'); }
+  function close(){ document.body.classList.remove('video-expanded'); btn.textContent = '⤢'; btn.setAttribute('aria-label','Expand video'); }
+  btn.addEventListener('click', function(){ isOpen() ? close() : open(); });
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isOpen()) close(); });
+})();
+</script>
+</body>
+</html>

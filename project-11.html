@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verdant Her — Jinyi Luan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="cursor.js" defer></script>
+<style>
+  body{ background:var(--black); color:var(--ink-on-black); }
+
+  .nav{ background:var(--black); border-bottom:1px solid var(--line-on-black); }
+  .wordmark-sm{ color:#fff; }
+  .nav-links .pill{ color:#fff; }
+  .nav-links .pill:hover, .nav-links .pill.is-active{ color:#fff; }
+
+  .project{
+    --gutter: clamp(1.25rem,3vw,2.5rem);
+    margin:0;
+    padding:clamp(1.25rem,3vw,2rem) var(--gutter) clamp(3rem,6vw,5rem);
+  }
+
+  .project-eyebrow{
+    display:block; text-align:center;
+    font-family:var(--mono); font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:#fff;
+  }
+  .project-title{
+    font-family:var(--cjk-serif); font-weight:700;
+    font-size:clamp(1.6rem,3.8vw,2.6rem);
+    margin:0.6rem 0 1.25rem; text-wrap:balance;
+    text-align:center;
+    color:#fff;
+  }
+  .project-meta{
+    display:flex; gap:2rem clamp(1.5rem,4vw,3rem); flex-wrap:wrap;
+    justify-content:center;
+    border-top:1px solid var(--line-on-black);
+    border-bottom:1px solid var(--line-on-black);
+    padding:1.1rem 0;
+  }
+  .project-meta .label{
+    display:block;
+    font-family:var(--mono); font-size:0.66rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:#fff; margin-bottom:0.3rem;
+  }
+  .project-meta .value{
+    font-family:var(--sans); font-size:0.9rem; color:#fff;
+  }
+
+  .project-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:start;
+    gap:clamp(1.5rem,4vw,3rem);
+    margin-top:clamp(2rem,5vw,3rem);
+  }
+  .project-left{ display:flex; flex-direction:column; }
+
+  .project-body{
+    max-width:60ch;
+    font-family:var(--sans); font-size:1.02rem; line-height:1.75;
+    color:var(--ink-on-black);
+  }
+  .project-body p + p{ margin-top:1.2rem; }
+  .keywords{ margin-top:1.5rem; }
+  .keywords .kw-label{
+    display:block;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:0.6rem;
+  }
+  .keywords ul{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-wrap:wrap; justify-content:center;
+    gap:0.5rem 0.75rem;
+  }
+  .keywords li{
+    font-family:var(--sans); font-size:0.85rem;
+    color:var(--ink-on-black);
+    border:1px solid var(--line-on-black);
+    border-radius:999px;
+    padding:0.35rem 0.9rem;
+  }
+
+  .poster-frame{
+    position:relative; align-self:start;
+    width:clamp(19rem, 35vw, 28rem);
+    max-width:100%;
+    margin-left:clamp(2rem, 7vw, 5rem);
+    cursor:zoom-in;
+  }
+  .poster-frame img{ display:block; width:100%; height:auto; }
+  .poster-caption{
+    display:block; text-align:center;
+    margin-top:0.75rem;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+  .expand-btn{
+    position:absolute; top:0.75rem; right:0.75rem;
+    z-index:2;
+    width:2.4rem; height:2.4rem;
+    border:none; border-radius:999px;
+    background:rgba(16,14,12,0.55);
+    color:#fff; font-size:1.1rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .expand-btn:hover{ background:rgba(16,14,12,0.8); }
+
+  .lightbox-backdrop{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(10,9,8,0);
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+    overflow:auto;
+    transition:opacity .25s ease, background .25s ease;
+  }
+  body.poster-expanded .lightbox-backdrop{
+    background:rgba(10,9,8,0.95);
+    opacity:1; pointer-events:auto;
+  }
+  body.poster-expanded .poster-frame img{
+    position:fixed; z-index:201;
+    top:50%; left:50%; transform:translate(-50%,-50%);
+    width:auto; height:92vh; max-width:92vw;
+    margin:0;
+    cursor:zoom-out;
+  }
+  body.poster-expanded .expand-btn{
+    position:fixed; z-index:202; top:1.5rem; right:1.5rem;
+  }
+
+  .project-gallery{
+    display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center;
+    gap:clamp(1rem,3vw,2rem);
+    margin:2.75rem 0 0.5rem;
+  }
+  .project-gallery img{
+    display:block; width:auto; height:min(60vh, 34rem);
+    max-width:100%;
+  }
+  .image-caption{
+    display:block; text-align:center;
+    margin-bottom:2.75rem;
+    font-family:var(--mono); font-size:0.7rem;
+    letter-spacing:0.04em; color:var(--ink-faint);
+  }
+  @media (max-width:720px){
+    .project-layout{ grid-template-columns:1fr; }
+    .poster-frame{ width:100%; max-width:18rem; margin:clamp(2rem,5vw,3rem) auto 0; }
+    .project-gallery img{ width:100%; max-width:24rem; height:auto; }
+  }
+
+  .page-footer{
+    margin:0;
+    padding:0 clamp(1.25rem,3vw,2.5rem) clamp(2.5rem,5vw,4rem);
+    display:flex; justify-content:flex-end;
+  }
+  .next-project{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:var(--mono); font-size:0.78rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:#fff; text-decoration:none;
+    border:1px solid var(--line-on-black);
+    border-radius:999px;
+    padding:0.6rem 1.3rem;
+    transition:background .15s ease, color .15s ease;
+  }
+  .next-project:hover{ background:#fff; color:var(--black); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="wordmark-sm" href="./">Jinyi Luan</a>
+  <nav class="nav-links">
+    <a class="pill" href="about.html">About</a>
+    <a class="pill" href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="project">
+  <span class="project-eyebrow">10 / 10</span>
+  <h1 class="project-title">Verdant Her</h1>
+
+  <div class="project-meta">
+    <div><span class="label">Medium</span><span class="value">Generative AI, ALife ecosystem</span></div>
+    <div><span class="label">Year</span><span class="value">2024</span></div>
+    <div><span class="label">Technology</span><span class="value">Blender</span></div>
+    <div><span class="label">Collaborators</span><span class="value">with Huiyuan Meng, Xintong Yang</span></div>
+  </div>
+
+  <div class="project-layout">
+    <div>
+      <div class="poster-frame" id="posterFrame">
+        <img id="posterImg" src="assets/193e07d4a25ac504d4d0dcbc5e8c3b3c.jpg" alt="Verdant Her project poster, with abstract, inspiration sources and the data-driven form design process">
+        <button class="expand-btn" id="expandPosterBtn" type="button" aria-label="Expand poster">⤢</button>
+      </div>
+      <span class="poster-caption">Project poster · Group collaboration, Group 2.4</span>
+    </div>
+
+    <div class="project-left">
+      <div class="project-body">
+        <p>A virtual ecosystem exploring the intersection of ALife (artificial life), generative AI and ecofeminism — using a flower's pistil and stamen structures as metaphor, with real gender-gap data (maternal mortality, adolescent birth rate, female labour participation, and more) driving the generation and evolution of its forms.</p>
+        <p>The work hopes to integrate the vitality of plants and women, and express the vitality of women's power.</p>
+        <div class="keywords">
+          <span class="kw-label">Keywords</span>
+          <ul>
+            <li>Artificial Life (ALife)</li>
+            <li>Synthetic Life Forms</li>
+            <li>Computational Ecosystems (CEs)</li>
+            <li>Virtual Morphogenesis</li>
+            <li>Postgenderism</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-gallery">
+    <img src="assets/78e25efa4bec6becd1558915fec93eb5.png" alt="Verdant Her, annotated structural sketch, black-and-white line drawing with labels">
+    <img src="assets/092559781a3eca8dca783d2239e685a5.png" alt="Verdant Her, full render of the generated form, white skeletal structure on black background">
+    <img src="assets/fda36251c470e47e98867bfa55465608.png" alt="Verdant Her, close-up detail of the generated form, bud and vine structure">
+  </div>
+  <span class="image-caption">Generated form renders · Placeholder caption</span>
+</main>
+
+<div class="lightbox-backdrop" id="lightboxBackdrop" aria-hidden="true"></div>
+
+<footer class="page-footer">
+  <a class="next-project" href="project.html">Next Project →</a>
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('expandPosterBtn');
+  var backdrop = document.getElementById('lightboxBackdrop');
+  var img = document.getElementById('posterImg');
+  function isOpen(){ return document.body.classList.contains('poster-expanded'); }
+  function open(){ document.body.classList.add('poster-expanded'); btn.textContent = '✕'; btn.setAttribute('aria-label','Close expanded view'); }
+  function close(){ document.body.classList.remove('poster-expanded'); btn.textContent = '⤢'; btn.setAttribute('aria-label','Expand poster'); }
+  btn.addEventListener('click', function(){ isOpen() ? close() : open(); });
+  img.addEventListener('click', function(){ if (isOpen()) close(); });
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isOpen()) close(); });
+})();
+</script>
+</body>
+</html>
